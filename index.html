@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sawaira Cinematic Birthday 💖</title>
+<style>
+body{
+  margin:0;font-family:'Segoe UI',sans-serif;color:white;text-align:center;overflow-x:hidden;
+  background:linear-gradient(135deg,#1c1c1c,#3a3a3a,#2a2a2a);
+  filter:contrast(1.1) sepia(0.1);
+}
+.page{display:none;min-height:100vh;padding-top:70px;animation:fade 1.2s;}
+#waiting{display:block;}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+#timer{font-size:24px;margin:15px;}
+.lockHeart{font-size:90px;cursor:pointer;animation:beat 1.3s infinite;display:inline-block;margin:15px;}
+@keyframes beat{0%{transform:scale(1)}25%{transform:scale(1.2)}40%{transform:scale(1)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
+.break{animation:breakHeart 1s forwards;}
+@keyframes breakHeart{0%{transform:scale(1)}50%{transform:scale(1.5)}100%{transform:scale(0);opacity:0}}
+button{padding:12px 28px;border:none;border-radius:25px;font-size:16px;cursor:pointer;background:linear-gradient(45deg,#ff4d6d,#ff758f);color:white;box-shadow:0 8px 25px rgba(0,0,0,0.4);transition:.3s;}
+button:hover{transform:scale(1.1);}
+.calendar{width:90%;max-width:350px;margin:auto;margin-top:20px;background:rgba(255,255,255,0.08);padding:15px;border-radius:12px;backdrop-filter:blur(6px);}
+.days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;}
+.days div{padding:8px;background:rgba(255,255,255,0.05);border-radius:5px;font-size:14px;}
+.birthday{animation:pulse 2s infinite;}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.15)}100%{transform:scale(1)}}
+.star{position:absolute;width:2px;height:2px;background:white;border-radius:50%;animation:twinkle 2s infinite alternate;}
+@keyframes twinkle{from{opacity:0.3}to{opacity:1}}
+.petal{position:absolute;top:-20px;font-size:16px;animation:fall linear infinite;}
+@keyframes fall{0%{transform:translateY(-10vh) rotate(0)}100%{transform:translateY(110vh) rotate(360deg)}}
+.card{width:90%;max-width:600px;margin:auto;background:rgba(255,255,255,0.1);padding:30px;border-radius:18px;backdrop-filter:blur(8px);box-shadow:0 8px 35px rgba(0,0,0,0.5);position:relative;transform-style:preserve-3d;}
+.letter{width:80%;max-width:500px;margin:auto;background:#fff;color:#333;padding:25px;border-radius:12px;box-shadow:0 10px 25px rgba(0,0,0,0.3);font-size:16px;line-height:1.5;transform:rotateX(-90deg);transform-origin:top;transition:transform 1s;}
+.letter.open{transform:rotateX(0deg);}
+.firework{position:absolute;font-size:22px;animation:boom 2s infinite;}
+@keyframes boom{0%{transform:scale(0);opacity:1}100%{transform:scale(3);opacity:0}}
+#birthdayStage{position:relative;}
+#cakeWrapper{position:relative;display:inline-block;}
+#cake{width:140px;font-size:140px;margin-top:20px;position:relative;}
+#flame{position:absolute;top:-25px;left:50%;transform:translateX(-50%);font-size:25px;animation:flicker 0.3s infinite alternate;}
+@keyframes flicker{0%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-52%) scale(1.1)}100%{transform:translateX(-48%) scale(0.9)}}
+@media(max-width:768px){#timer{font-size:20px;} .lockHeart{font-size:70px;} button{padding:10px 22px;font-size:14px;} #cake{font-size:100px;} #flame{font-size:18px};}
+</style>
+</head>
+<body>
+
+<!-- Music -->
+<audio id="music" loop>
+  <source src="music.mp3" type="audio/mp3">
+</audio>
+
+<!-- Page 1 -->
+<div class="page" id="waiting">
+  <h1> Sawaira Jee 💖</h1>
+  <div id="timer"></div>
+  <p style="font-size:18px; margin:10px 0;">
+    🔒 Surprise will unlock on <strong>21 March</strong>!<br>
+    Come daily to see a new quote ✨
+  </p>
+  <p id="quote" style="font-size:16px; margin:10px 0;"></p>
+  <div id="heart" class="lockHeart">💖</div>
+  <p id="unlockMsg"></p>
+  <div class="calendar">
+    <h3>March 2026</h3>
+    <div class="days" id="calendarDays"></div>
+  </div>
+</div>
+
+<!-- Page 2 -->
+<div class="page" id="birthday">
+  <h1>🎉 Happy Birthday Sawaira Jee 🎉</h1>
+  <div id="birthdayStage">
+    <div id="cakeWrapper">
+      <h1 id="cake">🎂</h1>
+      <div id="flame">🔥</div>
+    </div>
+    <button id="blowBtn">Blow Candle 🎉</button>
+    <p id="stageQuote" style="font-size:18px;margin-top:15px;display:none;">
+      Aaj ka din yaadgar hai, khushiyon se bhara is lamhe ko khusi se jeyie💖
+    </p>
+    <button id="nextCardBtn" style="display:none;margin-top:10px;">Next</button>
+  </div>
+</div>
+
+<!-- Page 3 -->
+<div class="page" id="cardPage">
+  <div class="card">
+    <h2> Sawaira Jee 💖</h2>
+    <div class="letter" id="letterContainer"></div>
+    <button onclick="finalPage()">Final Surprise</button>
+  </div>
+</div>
+
+<!-- Page 4 -->
+<div class="page" id="endPage">
+  <h1>✨ Happy Birthday Once Again Sawaira ✨</h1>
+  <p>Aaj ka din yaadgar hai, har lamha khushi se bhara rahe. 
+Youhe rehne dei khule zulfe aap par achi lagthi hei..
+Sajna sawarna bhi aap par acha lagtha hei, magar saadagi bhi aap par achi lagthi hei..
+Aap chulbul se larki aap par sanjeedgi achi nai lagthi, aap baat baat par hasti raha kare aap par hasna acha lagtha hein.💖</p>
+</div>
+
+<script>
+// Countdown
+var birthday=new Date("March 21, 2026 00:00:00").getTime();
+setInterval(function(){
+  var now=new Date().getTime();
+  var distance=birthday-now;
+  var d=Math.floor(distance/(1000*60*60*24));
+  var h=Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+  var m=Math.floor((distance%(1000*60*60))/(1000*60));
+  var s=Math.floor((distance%(1000*60))/1000);
+  document.getElementById("timer").innerHTML=d+" Days "+h+" Hours "+m+" Minutes "+s+" Seconds";
+},1000);
+
+// Quotes
+var quotes={1:"Naya din choti si khushi laata hai.",2:"Aaj ka din ek narm muskaan le aaye.",3:"Kuch meetha aap ke qareeb chhupa hai.",4:"Choti khushiyan din bhar saath hain.",5:"Aaj ko apni roshni se chamkao.",6:"Choti khushiyan lamhon mein chhupi hain.",7:"Ek narm khushbu aap ke gird hai.",8:"Aaj ek raaz sirf aap ke liye hai.",9:"Har lamha choti si hairat chhupi hai.",10:"Khushi aaj ke din aap tak aa sakti hai.",11:"Ghair mutawaqqa khushi dil ko garam karegi.",12:"Ek khamosh dua aap tak pohanchti hai.",13:"Aaj ki hawa khushi ki jhalak laayi hai.",14:"Chhote lamhe bari muskan mein badal sakte hain.",15:"Aankhein khuli rakho, jadoo chhupa hai.",16:"Ek narm chamak din ko roshan karegi.",17:"Aaj ek chhota khushgawar raaz hai.",18:"Sada lamhon mein chhoti khushiyan chhupi hain.",19:"Chhota sa khushi ka lamha qareeb hai.",20:"Kal ek khaas din le kar aayega.",21:"Aaj ka din tumhari roshni se roshan ho. Har lamha khushi aur pyar se bhara rahe. 💖"};
+var today=new Date().getDate();
+document.getElementById("quote").innerHTML=quotes[today]||"Bas thoda sa intezaar… 💖";
+
+// Calendar
+var cal=document.getElementById("calendarDays");
+for(var i=1;i<=31;i++){
+  var d=document.createElement('div');
+  if(i===21){d.innerHTML='💖'; d.className='birthday';} else {d.innerHTML=i;}
+  cal.appendChild(d);
+}
+
+// Heart unlock & music play
+var heart=document.getElementById('heart');
+var unlocked=false;
+if(today===21 && new Date().getMonth()===2){
+  unlocked=true;
+  heart.style.cursor='pointer';
+  heart.title='Click to see your surprise 💖';
+} else {
+  heart.style.cursor='not-allowed';
+  heart.title='Surprise will unlock on 21 March 💖';
+}
+
+heart.onclick=function(){
+  if(!unlocked){alert('Surprise will unlock on 21 March 💖'); return;}
+  this.classList.add('break');
+  
+  // Play music when heart clicked
+  var music=document.getElementById('music');
+  music.play().catch(e=>console.log("Music play blocked:", e));
+  
+  setTimeout(startBirthdayPage,900);
+}
+
+// Page 2 start
+function startBirthdayPage(){
+  document.getElementById("waiting").style.display='none';
+  document.getElementById("birthday").style.display='block';
+  createStars();createPetals();
+}
+
+// Blow candle
+document.getElementById('blowBtn').onclick=function(){
+  document.getElementById('cake').style.display='none';
+  document.getElementById('flame').style.display='none';
+  this.style.display='none';
+  document.getElementById('stageQuote').style.display='block';
+  document.getElementById('nextCardBtn').style.display='inline-block';
+}
+
+// Next card
+document.getElementById('nextCardBtn').onclick=function(){
+  document.getElementById('birthday').style.display='none';
+  document.getElementById('cardPage').style.display='block';
+  var letterContainer=document.getElementById('letterContainer');
+  letterContainer.classList.add('open');
+  var letter="Sawaira, aaj ka din tumhari roshni se roshan ho. Har lamha khushi aur pyar se bhara rahe. Tumhari muskurahat har dil ko chhoo jaaye. 💖";
+  var i=0;
+  var interval=setInterval(function(){
+    letterContainer.innerHTML=letter.substr(0,i);
+    i++;
+    if(i>letter.length) clearInterval(interval);
+  },50);
+}
+
+function finalPage(){
+  document.getElementById('cardPage').style.display='none';
+  document.getElementById('endPage').style.display='block';
+  createFireworks();
+}
+
+// Animations
+function createStars(){for(let i=0;i<80;i++){let s=document.createElement('div');s.className='star';s.style.top=Math.random()*100+'%';s.style.left=Math.random()*100+'%';document.body.appendChild(s);}}
+function createPetals(){for(let i=0;i<30;i++){let p=document.createElement('div');p.className='petal';p.innerHTML='🌹';p.style.left=Math.random()*100+'%';p.style.animationDuration=(5+Math.random()*5)+'s';document.body.appendChild(p);}
+}
+function createFireworks(){for(let i=0;i<20;i++){let f=document.createElement('div');f.className='firework';f.innerHTML='✨';f.style.left=Math.random()*100+'%';f.style.top=Math.random()*80+'%';document.body.appendChild(f);}
+}
+</script>
+</body>
+</html>
